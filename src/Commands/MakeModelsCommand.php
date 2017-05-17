@@ -236,6 +236,11 @@ class MakeModelsCommand extends GeneratorCommand
         $class = str_replace('{{guarded}}', 'protected $guarded = ' . VariableConversion::convertArrayToString($properties['guarded']) . ';', $class);
         $class = str_replace('{{timestamps}}', 'public $timestamps = ' . VariableConversion::convertBooleanToString($properties['timestamps']) . ';', $class);
 
+        if ($c = $this->option('connection')) {
+            $class = str_replace('{{connection}}', 'protected $connection = \''.$c."';\n", $class);
+        } else {
+            $class = str_replace("{{connection}}\n\n", '', $class);
+        }
         if ($this->option("getset")) {
             $class = $this->replaceTokensWithSetGetFunctions($properties, $class);
         } else {
@@ -429,6 +434,7 @@ class MakeModelsCommand extends GeneratorCommand
             ['timestamps', null, InputOption::VALUE_OPTIONAL, 'Rules for $timestamps columns', $this->timestampRules],
             ['ignore', "i", InputOption::VALUE_OPTIONAL, 'Ignores the tables you define, separated with ,', null],
             ['force', "f", InputOption::VALUE_OPTIONAL, 'Force override', false],
+            ['connection', "d", InputOption::VALUE_OPTIONAL, 'Database connection', FALSE],
             ['ignoresystem', "s", InputOption::VALUE_NONE, 'If you want to ignore system tables.
             Just type --ignoresystem or -s'],
             ['getset', 'm', InputOption::VALUE_NONE, 'Defines if you want to generate set and get methods']
