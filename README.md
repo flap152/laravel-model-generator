@@ -44,6 +44,7 @@ Options:
                                               Just type --ignoresystem or -s
   -m, --getset                   Defines if you want to generate set and get methods
   -h, --help                     Display this help message
+  -d, --connection               Database connection name
   -q, --quiet                    Do not output any message
   -V, --version                  Display this application version
       --ansi                     Force ANSI output
